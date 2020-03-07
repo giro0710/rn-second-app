@@ -1,66 +1,83 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
-import Card from '../components/Card';
-import Input from '../components/Input';
-import Colors from '../constants/color';
-import NumberContainer from '../components/NumberContainer';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Alert
+} from "react-native";
+import Card from "../components/Card";
+import Input from "../components/Input";
+import Colors from "../constants/colors";
+import NumberContainer from "../components/NumberContainer";
+import TitleText from "../components/TitleText";
+import BodyText from "../components/BodyText";
 
 const StartGameScreen = props => {
-  const [enteredValue, setEnteredValue] = useState('');
+  const [enteredValue, setEnteredValue] = useState("");
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState();
 
   const numberInputHandler = inputText => {
-    setEnteredValue(inputText.replace(/[^0-9]/g, ''));
-  }
+    setEnteredValue(inputText.replace(/[^0-9]/g, ""));
+  };
 
   const resetInputHandler = () => {
-    setEnteredValue('');
+    setEnteredValue("");
     setConfirmed(false);
-  }
+  };
 
   const confirmInputHandler = () => {
     const chosenNumber = parseInt(enteredValue);
     if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
       Alert.alert(
-        'Invalid number!',
-        'Number has to be a number between 1 and 99.',
+        "Invalid number!",
+        "Number has to be a number between 1 and 99.",
         [
           {
-            text: 'Okay',
-            style: 'destructive',
+            text: "Okay",
+            style: "destructive",
             onPress: resetInputHandler
           }
         ]
-      )
+      );
       return;
     }
     setConfirmed(true);
     setSelectedNumber(parseInt(enteredValue));
-    setEnteredValue('');
+    setEnteredValue("");
     Keyboard.dismiss();
-  }
+  };
 
   let confirmedOutput;
 
   if (confirmed) {
-    confirmedOutput =
+    confirmedOutput = (
       <Card style={styles.summaryContainer}>
         <Text>You Selected</Text>
         <NumberContainer>{selectedNumber}</NumberContainer>
-        <Button title="START GAME" onPress={props.onStartGame.bind(this, selectedNumber)} />
+        <Button
+          title="START GAME"
+          onPress={props.onStartGame.bind(this, selectedNumber)}
+        />
       </Card>
+    );
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => {
-      Keyboard.dismiss();
-    }}>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
       <View style={styles.screen}>
-        <Text style={styles.title}>Start New Game!</Text>
+        <TitleText style={styles.title}>Start New Game!</TitleText>
         <Card style={styles.inputContainer}>
-          <Text>Select a Number</Text>
-          <Input style={styles.input}
+          <BodyText>Select a Number</BodyText>
+          <Input
+            style={styles.input}
             blurOnSubmit
             autoCapitalize="none"
             autoCorrect={false}
@@ -71,10 +88,18 @@ const StartGameScreen = props => {
           />
           <View style={styles.buttonContainer}>
             <View style={styles.button}>
-              <Button title="Reset" color={Colors.accent} onPress={resetInputHandler} />
+              <Button
+                title="Reset"
+                color={Colors.accent}
+                onPress={resetInputHandler}
+              />
             </View>
             <View style={styles.button}>
-              <Button title="Confirm" color={Colors.primary} onPress={confirmInputHandler} />
+              <Button
+                title="Confirm"
+                color={Colors.primary}
+                onPress={confirmInputHandler}
+              />
             </View>
           </View>
         </Card>
@@ -82,27 +107,28 @@ const StartGameScreen = props => {
       </View>
     </TouchableWithoutFeedback>
   );
-}
+};
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 10,
-    alignItems: 'center'
+    alignItems: "center"
   },
   title: {
-    fontSize: 20,
-    marginVertical: 10
+    fontSize: 25,
+    marginVertical: 10,
+    fontFamily: "open-sans-bold"
   },
   inputContainer: {
     width: 300,
-    maxWidth: '80%',
-    alignItems: 'center'
+    maxWidth: "80%",
+    alignItems: "center"
   },
   buttonContainer: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
     paddingHorizontal: 15
   },
   button: {
@@ -110,11 +136,14 @@ const styles = StyleSheet.create({
   },
   input: {
     width: 50,
-    textAlign: 'center'
+    textAlign: "center"
   },
   summaryContainer: {
     marginTop: 20,
-    alignItems: 'center'
+    alignItems: "center"
+  },
+  text: {
+    fontFamily: "open-sans"
   }
 });
 

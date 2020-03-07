@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Colors from '../constants/color';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import Colors from "../constants/colors";
 
 const NumberContainer = props => {
   return (
@@ -8,7 +8,7 @@ const NumberContainer = props => {
       <Text style={styles.number}>{props.children}</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center"
   },
   number: {
     color: Colors.accent,
     fontSize: 22
   }
-})
+});
 
 export default NumberContainer;
